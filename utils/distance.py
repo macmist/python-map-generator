@@ -1,4 +1,4 @@
-from point import Point
+from utils.point import Point
 from math import sqrt
 
 

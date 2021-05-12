@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from utils.draw import Drawer
 from voronoi import VoronoiGenerator
+from utils.distance import *
 
 
 class App:
@@ -28,7 +29,7 @@ class App:
 
     def on_render(self):
         if not self.line_displayed:
-            generator = VoronoiGenerator(self._display_surf, 50)
+            generator = VoronoiGenerator(self._display_surf, EuclideanDistance())
             generator.generate()
             generator.draw()
             self.line_displayed = True
