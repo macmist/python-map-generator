@@ -27,7 +27,7 @@ class App:
 
     def on_render(self):
         if not self.line_displayed:
-            self._drawer.draw_line((1, 1), (200, 200))
+            self._drawer.draw_point((200, 200))
             self.line_displayed = True
         pygame.display.update()
 
