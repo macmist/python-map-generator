@@ -1,4 +1,6 @@
 import pygame
+from utils.point import Point
+from typing import List
 
 
 class Drawer:
@@ -13,6 +15,6 @@ class Drawer:
     def draw_point(self, point):
         self.surface.set_at(point, self.color)
 
-    def draw_points(self, points: list):
+    def draw_points(self, points: List[Point]):
         for point in points:
-            self.draw_point(point)
+            self.draw_point(point.to_coordinates())

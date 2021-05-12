@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from utils.draw import Drawer
+from voronoi import VoronoiGenerator
 
 
 class App:
@@ -27,7 +28,9 @@ class App:
 
     def on_render(self):
         if not self.line_displayed:
-            self._drawer.draw_point((200, 200))
+            generator = VoronoiGenerator(self._display_surf, 50)
+            generator.generate()
+            generator.draw()
             self.line_displayed = True
         pygame.display.update()
 
