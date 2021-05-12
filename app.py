@@ -1,9 +1,11 @@
 import pygame
 from pygame.locals import *
+from utils.draw import Drawer
 
 
 class App:
     def __init__(self):
+        self.line_displayed = False
         self._running = True
         self._display_surf = None
         self.size = self.weight, self.height = 640, 400
@@ -12,6 +14,8 @@ class App:
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
+        self._drawer = Drawer(self._display_surf)
+
         return self._running
 
     def on_event(self, event):
@@ -22,6 +26,9 @@ class App:
         pass
 
     def on_render(self):
+        if not self.line_displayed:
+            self._drawer.draw_line((1, 1), (200, 200))
+            self.line_displayed = True
         pygame.display.update()
 
     def on_cleanup(self):
