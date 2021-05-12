@@ -5,6 +5,7 @@ from utils.draw import Drawer
 
 class App:
     def __init__(self):
+        self._drawer = None
         self.line_displayed = False
         self._running = True
         self._display_surf = None
@@ -13,9 +14,8 @@ class App:
     def on_init(self):
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        self._running = True
         self._drawer = Drawer(self._display_surf)
-
+        self._running = True
         return self._running
 
     def on_event(self, event):
