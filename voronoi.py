@@ -9,18 +9,21 @@ from utils.distance import DistanceInterface
 
 
 class VoronoiGenerator:
-    def __init__(self, surface: pygame.Surface, interface: DistanceInterface):
+    def __init__(self, surface: pygame.Surface, interface: DistanceInterface, callback=None):
         self.surface = surface
         self.sites: List[Site] = []
         self.points: List[Point] = []
         self.drawer = Drawer(surface)
         self.max_sites = 100
         self.distanceCalculator = interface
+        self.callback = callback
 
     def generate(self):
         self.init_points()
         self.generate_sites()
         self.add_points_to_sites()
+        if self.callback:
+            self.callback()
 
     def init_points(self):
         range_x, range_y = self.surface.get_size()
