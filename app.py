@@ -4,7 +4,9 @@ from utils.draw import Drawer
 from ui.button import Button
 from voronoi import VoronoiGenerator
 from utils.distance import *
+from utils.hyperbola import Hyperbola
 import logging
+
 
 class App:
     def __init__(self):
@@ -48,8 +50,10 @@ class App:
         pass
 
     def on_render(self):
+        self._display_surf.fill((0, 0, 0))
         self.manhattan_button.show()
         self.euclidean_button.show()
+        self.draw_mouse_line()
         pygame.display.update()
 
     def on_cleanup(self):
@@ -58,6 +62,23 @@ class App:
     def start_voronoi(self, interface: DistanceInterface):
         self.voronoi = VoronoiGenerator(self._display_surf, interface, self.on_finished_calculation)
         self.voronoi.generate()
+
+    def draw_hyperbola(self, distance_from_line, top: bool = True):
+        hyperbola = Hyperbola(ManhattanDistance(), Point(100, 150), distance_from_line)
+        self._drawer.draw_point((100, 150))
+
+        for x in range(self.weight):
+            y = hyperbola.get_point_from_x(x, top)
+            if 0 <= y < self.height:
+                self._drawer.draw_point((x, y))
+
+    def draw_mouse_line(self):
+        x, y = pygame.mouse.get_pos()
+        mouse_line_drawer = Drawer(self._display_surf, (255, 0, 0))
+        mouse_line_drawer.draw_line((0, y), (self.weight - 1, y))
+        distance = y - 150
+        if distance != 0:
+            self.draw_hyperbola(distance, distance > 0)
 
     def on_execute(self):
         if not self.on_init():
