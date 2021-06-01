@@ -29,7 +29,7 @@ class VoronoiGenerator:
         self.sites: List[Site] = []
         self.points: List[Point] = []
         self.drawer = Drawer(surface)
-        self.max_sites = 100
+        self.max_sites = 50
         self.distanceCalculator = interface
         self.callback = callback
         self.event_queue = []
@@ -41,6 +41,10 @@ class VoronoiGenerator:
         self.add_points_to_sites()
         if self.callback:
             self.callback()
+
+    def generate_without_voronoi(self):
+        self.init_points()
+        self.generate_sites()
 
     @timeit
     def init_points(self):
