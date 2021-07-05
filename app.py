@@ -15,24 +15,18 @@ class App:
         self.line_displayed = False
         self._running = True
         self._display_surf = None
-        self.size = self.weight, self.height = 512, 512
+        self.size = self.weight, self.height = 1024, 1024
         self.manhattan_button: Button = None
         self.euclidean_button: Button = None
         self.voronoi: VoronoiGenerator = None
         self.hyperbolaes = []
-        self.ds = DiamondSquare(9)
+        self.ds = DiamondSquare(10)
 
         self.ds.compute()
 
     def on_init(self):
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        # self._drawer = Drawer(self._display_surf)
-        # self._running = True
-        # self.manhattan_button = Button(self._display_surf, (10, 10), "Manhattan")
-        # self.euclidean_button = Button(self._display_surf, (110, 10), "Euclidean")
-        # self.voronoi = VoronoiGenerator(self._display_surf, ManhattanDistance())
-        # self.voronoi.generate_without_voronoi()
         self.ds.draw(self._display_surf)
         return self._running
 
@@ -47,21 +41,11 @@ class App:
         if event.type == pygame.MOUSEBUTTONDOWN:
             position = pygame.mouse.get_pos()
             print(position)
-            # if self.euclidean_button.is_point_inside(position):
-            #     self.start_voronoi(EuclideanDistance())
-            #     print('euclidean')
-            # if self.manhattan_button.is_point_inside(position):
-            #     print('manhattan')
-            #     self.start_voronoi(ManhattanDistance())
 
     def on_loop(self):
         pass
 
     def on_render(self):
-        # self._display_surf.fill((0, 0, 0))
-        # self.manhattan_button.show()
-        # self.euclidean_button.show()
-        # self.draw_mouse_line()
         pygame.display.update()
 
 

@@ -19,6 +19,11 @@ class DiamondSquare:
         self.step: int = self.side_length - 1
         self.min = 0
         self.max = 0
+        self.blue = (0, 0, 255)
+        self.sand = (255,248,220)
+        self.brown = (222,184,135)
+        self.white = (255, 255, 255)
+        self.green = (0, 255, 0)
 
     def compute(self):
         while self.step > 1:
@@ -81,11 +86,27 @@ class DiamondSquare:
 
     def draw(self, surface: pygame.surface):
         divider = self.max - self.min
+        blue_points = 0
         for x in range(0, self.side_length):
             for y in range(0, self.side_length):
                 normalized = (self.map[x][y] - self.min) / divider
                 color = 255 if normalized >= float(1) else normalized * 256
                 color = int(color)
+                point_color = self.blue
+                if 0 <= color < 100:
+                    point_color = (0, 0, color + 50)
+                elif 100 <= color < 102:
+                    point_color = self.sand
+                elif 102 <= color < 105:
+                    point_color = self.brown
+                elif 105 <= color < 200:
+                    point_color = (0, color - 50, 0)
+                else:
+                    point_color = (color, color, color)
+
+                if color == 0:
+                    blue_points += 1
+
                 surface.set_at((x, y), (color, color, color))
 
     def __str__(self):
