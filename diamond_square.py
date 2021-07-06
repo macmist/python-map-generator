@@ -3,7 +3,7 @@ import pygame
 
 
 class DiamondSquare:
-    def __init__(self, n):
+    def __init__(self, n, seed="Je vais bieng", in_color=True):
         self.n = n
         self.side_length = 2 ** n + 1
         self.map = []
@@ -24,6 +24,9 @@ class DiamondSquare:
         self.brown = (222,184,135)
         self.white = (255, 255, 255)
         self.green = (0, 255, 0)
+        self.mountain = (139, 69, 19)
+        self.in_color = in_color
+        random.seed(seed)
 
     def compute(self):
         while self.step > 1:
@@ -101,13 +104,24 @@ class DiamondSquare:
                     point_color = self.brown
                 elif 105 <= color < 200:
                     point_color = (0, color - 50, 0)
+                elif 200 <= color < 210:
+                    offset = color - 200
+                    point_color = (205 + offset, 133 + offset, 63 + offset)
+                elif 210 <= color < 215:
+                    offset = color - 210
+                    point_color = (160 + offset,82 + offset,45 + offset)
+                elif 215 <= color < 235:
+                    offset = color - 215
+                    point_color = (139 + offset, 69 + offset, 19 + offset)
                 else:
                     point_color = (color, color, color)
 
                 if color == 0:
                     blue_points += 1
 
-                surface.set_at((x, y), (color, color, color))
+                point_color = point_color if self.in_color else (color, color, color)
+
+                surface.set_at((x, y), point_color)
 
     def __str__(self):
         return "n = {n}\nside = {side}\nmap = {map}".format(n=self.n, side=self.side_length, map=self.map)
